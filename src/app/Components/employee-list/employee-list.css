@@ -1,0 +1,313 @@
+
+:host {
+  display: block;
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: #1f2937;
+  font-size: 13px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Page */
+.page-container {
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 24px;
+  background: #f6f7fb;
+}
+
+/* Header */
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.page-header h1 {
+  margin: 0 0 5px;
+  font-size: 24px;
+  font-weight: 650;
+  letter-spacing: -0.5px;
+  color: #171923;
+}
+
+.page-header p {
+  margin: 0;
+  font-size: 13px;
+  color: #858b9a;
+}
+
+/* Employee Card */
+.employee-card {
+  width: 100%;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #e8eaf0;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(30, 41, 59, 0.035);
+}
+
+/* Card Heading */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 19px 20px;
+}
+
+.section-header h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 650;
+  color: #202333;
+}
+
+.employee-count {
+  padding: 5px 9px;
+  border: 1px solid #e5e7ff;
+  border-radius: 6px;
+  background: #f3f3ff;
+  color: #5145cd;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Search and Filter */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 20px 16px;
+}
+
+.toolbar input,
+.toolbar select {
+  height: 38px;
+  border: 1px solid #e1e4eb;
+  border-radius: 7px;
+  background: #fff;
+  color: #44495a;
+  font-family: inherit;
+  font-size: 12px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.toolbar input {
+  width: 280px;
+  max-width: 100%;
+  padding: 0 12px;
+}
+
+.toolbar select {
+  min-width: 155px;
+  padding: 0 10px;
+}
+
+.toolbar input::placeholder {
+  color: #a1a5b2;
+}
+
+.toolbar input:focus,
+.toolbar select:focus {
+  border-color: #8177ed;
+  box-shadow: 0 0 0 3px rgba(99, 86, 230, 0.08);
+}
+
+/* Table Scrolling */
+.table-wrapper {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border-top: 1px solid #eff0f4;
+  scrollbar-width: thin;
+  scrollbar-color: #c9cbd5 #f5f5f8;
+}
+
+.table-wrapper::-webkit-scrollbar {
+  height: 6px;
+}
+
+.table-wrapper::-webkit-scrollbar-track {
+  background: #f5f5f8;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+  background: #c9cbd5;
+  border-radius: 10px;
+}
+
+/* Table */
+table {
+  width: 100%;
+  min-width: 1100px;
+  border-collapse: separate;
+  border-spacing: 0;
+  text-align: left;
+}
+
+thead {
+  background: #fafbfc;
+}
+
+th {
+  padding: 12px 14px;
+  border-bottom: 1px solid #e9ebf1;
+  color: #858a99;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.45px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #f0f1f5;
+  color: #626879;
+  font-size: 12px;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+tbody tr {
+  transition: background 0.15s ease;
+}
+
+tbody tr:hover {
+  background: #fafaff;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Employee Name */
+td:nth-child(2) {
+  color: #262a39;
+  font-weight: 600;
+}
+
+/* Action Buttons */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.actions button {
+  padding: 6px 8px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.btn-view {
+  background: #f0efff;
+  color: #5848cf;
+}
+
+.btn-view:hover {
+  background: #e5e2ff;
+}
+
+.btn-edit {
+  background: #eaf6ff;
+  color: #1674a8;
+}
+
+.btn-edit:hover {
+  background: #d8efff;
+}
+
+.btn-delete {
+  background: #fff0f0;
+  color: #d74747;
+}
+
+.btn-delete:hover {
+  background: #ffe2e2;
+}
+
+/* Empty State */
+.empty-state {
+  padding: 36px 16px;
+  text-align: center;
+  color: #9297a5;
+  font-size: 13px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .page-container {
+    padding: 16px 12px;
+  }
+
+  .page-header h1 {
+    font-size: 22px;
+  }
+
+  .section-header {
+    padding: 16px;
+  }
+
+  .toolbar {
+    padding: 0 16px 14px;
+  }
+
+  .toolbar input {
+    flex: 1;
+    width: auto;
+    min-width: 0;
+  }
+
+  .toolbar select {
+    min-width: 130px;
+  }
+
+  table {
+    min-width: 1100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-container {
+    padding: 12px 8px;
+  }
+
+  .page-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .section-header {
+    gap: 8px;
+  }
+
+  .section-header h2 {
+    font-size: 15px;
+  }
+
+  .toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .toolbar input,
+  .toolbar select {
+    width: 100%;
+    min-height: 38px;
+  }
+}
