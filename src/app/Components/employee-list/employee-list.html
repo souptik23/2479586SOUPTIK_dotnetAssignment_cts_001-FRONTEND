@@ -60,7 +60,13 @@
           <td class="actions">
             <button type="button" class="btn-view">View</button>
             <button type="button" class="btn-edit">Edit</button>
-            <button type="button" class="btn-delete">Delete</button>
+
+            <!-- <button type="button" class="btn-delete">Delete</button> -->
+             <button
+                type="button"
+                class="btn-delete"
+                (click)="deleteEmployee(employee.employeeId)"
+             >Delete</button>
           </td>
         </tr>
       } @empty {

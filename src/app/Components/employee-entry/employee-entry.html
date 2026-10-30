@@ -1,102 +1,112 @@
-
 <div class="page-container">
-  <div class="form-card">
+    <div class="form-card">
 
-    <div class="form-header">
-      <h1>Add New Employee</h1>
-      <p>Fill in the details to register a new employee.</p>
+        <div class="form-header">
+            <h1>Add New Employee</h1>
+            <p>Fill in the details to register a new employee.</p>
+        </div>
+
+        <form>
+            <h3>Personal Information</h3>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="employeeId">Employee ID *</label>
+                    <input type="number" [(ngModel)]="EmployeeObj.employeeId" id="employeeId" name="employeeId"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <select id="gender" [(ngModel)]="EmployeeObj.gender" name="gender">
+                        <option value="">Select gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                        <option value="Prefer not to say">Prefer not to say</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="firstName">First Name *</label>
+                    <input type="text" [(ngModel)]="EmployeeObj.firstName" id="firstName" name="firstName"
+                        placeholder="Enter first name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="lastName">Last Name *</label>
+                    <input type="text" [(ngModel)]="EmployeeObj.lastName" id="lastName" name="lastName"
+                        placeholder="Enter last name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" [(ngModel)]="EmployeeObj.email" id="email" name="email"
+                        placeholder="name@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phoneNumber">Phone Number *</label>
+                    <input type="tel" [(ngModel)]="EmployeeObj.phoneNumber" id="phoneNumber" name="phoneNumber"
+                        placeholder="10-digit phone number" maxlength="10" pattern="[0-9]{10}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="dateOfBirth">Date of Birth</label>
+                    <input type="date" [(ngModel)]="EmployeeObj.dateOfBirth" id="dateOfBirth" name="dateOfBirth">
+                </div>
+            </div>
+
+            <h3>Employment Information</h3>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="department">Department</label>
+                    <select id="department" [(ngModel)]="EmployeeObj.department" name="department">
+                        <option value="">Select department</option>
+                        <option value="IT">IT</option>
+                        <option value="HR">Human Resources</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Sales">Sales</option>
+                        <option value="Operations">Operations</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="designation">Designation</label>
+                    <input type="text" [(ngModel)]="EmployeeObj.designation" id="designation" name="designation"
+                        placeholder="e.g. Software Engineer">
+                </div>
+
+                <div class="form-group">
+                    <label for="dateOfJoining">Date of Joining</label>
+                    <input type="date" [(ngModel)]="EmployeeObj.dateOfJoining" id="dateOfJoining" name="dateOfJoining">
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="address">Address</label>
+                    <textarea id="address" [(ngModel)]="EmployeeObj.address" name="address" rows="3"
+                        placeholder="Enter complete address"></textarea>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="reset" class="btn-secondary">Clear Form</button>
+                <button type="button" class="btn-primary" (click)="onSubmitSaveEmployee()">Add Employee</button>
+            </div>
+
+            <div class="resume-upload-section">
+                <h3>Upload Resume PDF</h3>
+
+                <input type="file" accept=".pdf,application/pdf" (change)="onFileSelected($event)" />
+
+                <button type="button" (click)="onUploadAndExtractPdf()" [disabled]="!selectedFile || isExtracting">
+                    {{ isExtracting ? 'Extracting details...' : 'Upload PDF & Auto-Fill Form' }}
+                </button>
+            </div>
+
+        </form>
+
     </div>
-
-    <form>
-      <h3>Personal Information</h3>
-
-      <div class="form-grid">
-        <div class="form-group">
-          <label for="employeeId">Employee ID *</label>
-          <input type="number" [(ngModel)]="EmployeeObj.employeeId" id="employeeId" name="employeeId" required>
-        </div>
-
-        <div class="form-group">
-          <label for="gender">Gender</label>
-          <select id="gender" [(ngModel)]="EmployeeObj.gender" name="gender">
-            <option value="">Select gender</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Other">Other</option>
-            <option value="Prefer not to say">Prefer not to say</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="firstName">First Name *</label>
-          <input type="text" [(ngModel)]="EmployeeObj.firstName" id="firstName" name="firstName"
-                 placeholder="Enter first name" required>
-        </div>
-
-        <div class="form-group">
-          <label for="lastName">Last Name *</label>
-          <input type="text" [(ngModel)]="EmployeeObj.lastName" id="lastName" name="lastName"
-                 placeholder="Enter last name" required>
-        </div>
-
-        <div class="form-group">
-          <label for="email">Email Address *</label>
-          <input type="email" [(ngModel)]="EmployeeObj.email" id="email" name="email"
-                 placeholder="name@example.com" required>
-        </div>
-
-        <div class="form-group">
-          <label for="phoneNumber">Phone Number *</label>
-          <input type="tel" [(ngModel)]="EmployeeObj.phoneNumber" id="phoneNumber" name="phoneNumber"
-                 placeholder="10-digit phone number"
-                 maxlength="10" pattern="[0-9]{10}" required>
-        </div>
-
-        <div class="form-group">
-          <label for="dateOfBirth">Date of Birth</label>
-          <input type="date" [(ngModel)]="EmployeeObj.dateOfBirth" id="dateOfBirth" name="dateOfBirth">
-        </div>
-      </div>
-
-      <h3>Employment Information</h3>
-
-      <div class="form-grid">
-        <div class="form-group">
-          <label for="department">Department</label>
-          <select id="department" [(ngModel)]="EmployeeObj.department" name="department">
-            <option value="">Select department</option>
-            <option value="IT">IT</option>
-            <option value="HR">Human Resources</option>
-            <option value="Finance">Finance</option>
-            <option value="Marketing">Marketing</option>
-            <option value="Sales">Sales</option>
-            <option value="Operations">Operations</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="designation">Designation</label>
-          <input type="text" [(ngModel)]="EmployeeObj.designation" id="designation" name="designation"
-                 placeholder="e.g. Software Engineer">
-        </div>
-
-        <div class="form-group">
-          <label for="dateOfJoining">Date of Joining</label>
-          <input type="date" [(ngModel)]="EmployeeObj.dateOfJoining" id="dateOfJoining" name="dateOfJoining">
-        </div>
-
-        <div class="form-group full-width">
-          <label for="address">Address</label>
-          <textarea id="address" [(ngModel)]="EmployeeObj.address" name="address" rows="3"
-                    placeholder="Enter complete address"></textarea>
-        </div>
-      </div>
-
-      <div class="form-actions">
-        <button type="reset" class="btn-secondary">Clear Form</button>
-        <button type="button" class="btn-primary" (click)="onSubmitSaveEmployee()">Add Employee</button>
-      </div>
-    </form>
-
-  </div>
 </div>

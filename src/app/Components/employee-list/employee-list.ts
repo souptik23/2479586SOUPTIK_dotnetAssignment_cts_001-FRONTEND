@@ -11,6 +11,8 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './employee-list.html',
   styleUrl: './employee-list.css'
 })
+
+
 export class EmployeeList implements OnInit {
 
   http = inject(HttpClient);
@@ -35,6 +37,7 @@ export class EmployeeList implements OnInit {
 
   ngOnInit(): void {
     this.getAllEmployee();
+    console.log('Employee list initialized:', this.employeeList);
   }
 
   getAllEmployee(): void {
@@ -46,6 +49,20 @@ export class EmployeeList implements OnInit {
         },
         error: (error) => {
           console.error('Failed to fetch employees:', error);
+        }
+      });
+  }
+
+  deleteEmployee( employeeId: number): void {
+    this.http.delete(`https://localhost:7091/api/employee/${employeeId}`)
+      .subscribe({
+        next: () => {
+          console.log(`Employee with ID ${employeeId} deleted successfully.`);
+          // this.getAllEmployee(); // Refresh the list after deletion
+          this.employeeList = this.employeeList.filter(emp => emp.employeeId !== employeeId);
+        },
+        error: (error) => {
+          console.error(`Failed to delete employee with ID ${employeeId}:`, error);
         }
       });
   }
