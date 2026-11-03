@@ -1,0 +1,175 @@
+
+<div class="page-container">
+
+  <div class="view-card">
+
+    <!-- Header -->
+    <div class="view-header">
+      <div class="header-left">
+        <div class="profile-avatar">
+          {{ EmployeeObj.firstName?.charAt(0) }}{{ EmployeeObj.lastName?.charAt(0) }}
+        </div>
+
+        <div class="header-info">
+          <span class="status-badge">
+            <span class="status-dot"></span>
+            Employee Details
+          </span>
+
+          <h1>{{ EmployeeObj.firstName }} {{ EmployeeObj.lastName }}</h1>
+
+          <p>
+            {{ EmployeeObj.designation || 'Designation not specified' }}
+            <span>•</span>
+            {{ EmployeeObj.department || 'Department not specified' }}
+          </p>
+
+          <span class="employee-id">
+            Employee ID: #{{ EmployeeObj.employeeId }}
+          </span>
+        </div>
+      </div>
+
+      <button class="btn-close" (click)="closePage()">
+        &larr; Back to List
+      </button>
+    </div>
+
+    <!-- Personal Information -->
+    <div class="details-section">
+
+      <div class="section-heading">
+        <span class="section-icon">👤</span>
+        <div>
+          <h3>Personal Information</h3>
+          <p>Basic personal and contact details</p>
+        </div>
+      </div>
+
+      <div class="details-grid">
+
+        <div class="detail-item">
+          <label>First Name</label>
+          <p>{{ EmployeeObj.firstName || 'Not provided' }}</p>
+        </div>
+
+        <div class="detail-item">
+          <label>Last Name</label>
+          <p>{{ EmployeeObj.lastName || 'Not provided' }}</p>
+        </div>
+
+        <div class="detail-item">
+          <label>Email Address</label>
+          <p>{{ EmployeeObj.email || 'Not provided' }}</p>
+        </div>
+
+        <div class="detail-item">
+          <label>Phone Number</label>
+          <p>{{ EmployeeObj.phoneNumber || 'Not provided' }}</p>
+        </div>
+
+        <div class="detail-item">
+          <label>Gender</label>
+          <p>{{ EmployeeObj.gender || 'Not provided' }}</p>
+        </div>
+
+        <div class="detail-item">
+          <label>Date of Birth</label>
+          <p>
+            {{ EmployeeObj.dateOfBirth
+              ? (EmployeeObj.dateOfBirth | date:'dd MMMM yyyy')
+              : 'Not provided' }}
+          </p>
+        </div>
+
+        <div class="detail-item full-width">
+          <label>Residential Address</label>
+          <p>{{ EmployeeObj.address || 'Not provided' }}</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Employment Information -->
+    <div class="details-section">
+
+      <div class="section-heading">
+        <span class="section-icon">💼</span>
+        <div>
+          <h3>Employment Information</h3>
+          <p>Department, designation and joining details</p>
+        </div>
+      </div>
+
+      <div class="details-grid">
+
+        <div class="detail-item">
+          <label>Employee ID</label>
+          <p>#{{ EmployeeObj.employeeId }}</p>
+        </div>
+
+        <div class="detail-item">
+          <label>Department</label>
+          <p>{{ EmployeeObj.department || 'Not provided' }}</p>
+        </div>
+
+        <div class="detail-item">
+          <label>Designation</label>
+          <p>{{ EmployeeObj.designation || 'Not provided' }}</p>
+        </div>
+
+        <div class="detail-item">
+          <label>Date of Joining</label>
+          <p>
+            {{ EmployeeObj.dateOfJoining
+              ? (EmployeeObj.dateOfJoining | date:'dd MMMM yyyy')
+              : 'Not provided' }}
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Record Information -->
+    <div class="details-section record-section">
+
+      <div class="section-heading">
+        <span class="section-icon">🕒</span>
+        <div>
+          <h3>Record Information</h3>
+          <p>Database record timestamps</p>
+        </div>
+      </div>
+
+      <div class="details-grid">
+
+        <div class="detail-item">
+          <label>Created At</label>
+          <p>
+            {{ EmployeeObj.createdAt
+              ? (EmployeeObj.createdAt | date:'dd MMM yyyy, hh:mm a')
+              : 'Not available' }}
+          </p>
+        </div>
+
+        <div class="detail-item">
+          <label>Last Updated At</label>
+          <p>
+            {{ EmployeeObj.updatedAt
+              ? (EmployeeObj.updatedAt | date:'dd MMM yyyy, hh:mm a')
+              : 'Not available' }}
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="view-footer">
+      <span>Employee Management System</span>
+      <span>Employee #{{ EmployeeObj.employeeId }}</span>
+    </div>
+
+  </div>
+
+</div>

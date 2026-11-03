@@ -3,6 +3,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-employee-list',
@@ -14,6 +15,8 @@ import { FormsModule } from '@angular/forms';
 
 
 export class EmployeeList implements OnInit {
+
+  constructor(public router: Router) { }
 
   http = inject(HttpClient);
 
@@ -38,6 +41,10 @@ export class EmployeeList implements OnInit {
   ngOnInit(): void {
     this.getAllEmployee();
     console.log('Employee list initialized:', this.employeeList);
+
+
+    // refresh the page once so that it wil load all the employe
+    this.reloadPage();
   }
 
   getAllEmployee(): void {
@@ -53,17 +60,53 @@ export class EmployeeList implements OnInit {
       });
   }
 
-  deleteEmployee( employeeId: number): void {
+  deleteEmployee(employeeId: number): void {
     this.http.delete(`https://localhost:7091/api/employee/${employeeId}`)
       .subscribe({
         next: () => {
           console.log(`Employee with ID ${employeeId} deleted successfully.`);
           // this.getAllEmployee(); // Refresh the list after deletion
           this.employeeList = this.employeeList.filter(emp => emp.employeeId !== employeeId);
+          this.reloadPage();
         },
         error: (error) => {
           console.error(`Failed to delete employee with ID ${employeeId}:`, error);
         }
       });
   }
+
+  editEmployee(employeeId: number): void {
+    this.router.navigate(['/update', employeeId]);
+  }
+
+  viewEmployee(employeeId: number): void {
+    this.router.navigate(['/view', employeeId]);
+  }
+
+  reloadPage(): void {
+    const hasReloaded = sessionStorage.getItem('hasReloaded');
+
+    if (!hasReloaded) {
+      sessionStorage.setItem('hasReloaded', 'true');
+      window.location.reload();
+    } else {
+      sessionStorage.removeItem('hasReloaded');
+    }
+  }
+}
+
+export interface Employee {
+  employeeId: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  gender: string;
+  dateOfBirth: string;
+  department: string;
+  designation: string;
+  dateOfJoining: string;
+  address: string;
+  createdAt: string;
+  updatedAt: string;
 }

@@ -1,0 +1,31 @@
+ul {
+  display: flex;
+  list-style: none;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  margin: 0;
+  background: #0f172a;
+  border-radius: 12px;
+  box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.2);
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+ul li a {
+  text-decoration: none;
+  color: #94a3b8;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
+}
+
+ul li a:hover {
+  color: #ffffff;
+  background-color: #1e293b;
+}
+
+ul li a.router-link-active {
+  color: #ffffff;
+  background-color: #3b82f6;
+  font-weight: 600;
+}

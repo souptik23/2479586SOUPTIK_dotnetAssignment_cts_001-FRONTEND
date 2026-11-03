@@ -1,0 +1,24 @@
+<p>pdf-upload works!</p>
+
+<div class="resume-upload-section">
+
+  <h3>Upload Resume PDF</h3>
+
+  <input
+    type="file"
+    accept=".pdf,application/pdf"
+    (change)="onFileSelected($event)"
+  />
+
+  <button
+    type="button"
+    (click)="onUploadAndExtractPdf()"
+    [disabled]="!selectedFile || isExtracting">
+
+    {{ isExtracting
+      ? 'Extracting details...'
+      : 'Upload PDF & Auto-Fill Form' }}
+
+  </button>
+
+</div>

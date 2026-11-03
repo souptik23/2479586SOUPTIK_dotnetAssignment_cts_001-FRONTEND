@@ -1,0 +1,282 @@
+
+:host {
+  display: block;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  color: #1e293b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.page-container {
+  min-height: 100vh;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #eef2ff, #f8fafc);
+}
+
+.view-card {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 35px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  box-shadow: 0 12px 40px rgba(15, 23, 42, 0.08);
+  animation: fadeIn 0.4s ease;
+}
+
+/* Header */
+
+.view-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 25px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.profile-avatar {
+  width: 76px;
+  height: 76px;
+  min-width: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  color: #fff;
+  font-size: 25px;
+  font-weight: 700;
+  text-transform: uppercase;
+  box-shadow: 0 6px 15px rgba(79, 70, 229, 0.2);
+}
+
+.header-info h1 {
+  margin: 10px 0 5px;
+  color: #172554;
+  font-size: 27px;
+  font-weight: 700;
+}
+
+.header-info p {
+  margin: 0 0 8px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.header-info p span {
+  padding: 0 5px;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 11px;
+  border-radius: 20px;
+  background: #eef2ff;
+  color: #4f46e5;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #6366f1;
+}
+
+.employee-id {
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Back Button */
+
+.btn-close {
+  padding: 11px 17px;
+  border: none;
+  border-radius: 8px;
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.btn-close:hover {
+  background: #e2e8f0;
+  transform: translateY(-2px);
+}
+
+/* Sections */
+
+.details-section {
+  padding: 28px 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-bottom: 24px;
+}
+
+.section-icon {
+  width: 43px;
+  height: 43px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: #eef2ff;
+  font-size: 20px;
+}
+
+.section-heading h3 {
+  margin: 0 0 4px;
+  color: #1e293b;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.section-heading p {
+  margin: 0;
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+/* Details Grid */
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px 35px;
+  padding-left: 56px;
+}
+
+.detail-item {
+  min-width: 0;
+}
+
+.detail-item label {
+  display: block;
+  margin-bottom: 7px;
+  color: #94a3b8;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+}
+
+.detail-item p {
+  margin: 0;
+  color: #334155;
+  font-size: 14px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+.record-section {
+  border-bottom: none;
+}
+
+/* Footer */
+
+.view-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  padding-top: 20px;
+  border-top: 1px solid #e2e8f0;
+  color: #94a3b8;
+  font-size: 11px;
+}
+
+/* Animation */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+
+@media (max-width: 750px) {
+  .view-card {
+    padding: 22px;
+  }
+
+  .view-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .details-grid {
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-container {
+    padding: 15px 10px;
+  }
+
+  .view-card {
+    padding: 18px;
+  }
+
+  .header-left {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .profile-avatar {
+    width: 55px;
+    height: 55px;
+    min-width: 55px;
+    font-size: 19px;
+  }
+
+  .header-info h1 {
+    font-size: 20px;
+  }
+
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .full-width {
+    grid-column: auto;
+  }
+
+  .view-footer {
+    flex-direction: column;
+  }
+}

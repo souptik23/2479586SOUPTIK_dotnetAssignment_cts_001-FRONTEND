@@ -1,22 +1,70 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
-@Component({
-  imports: [FormsModule],
-  selector: 'app-employee-entry',
-  styleUrl: './employee-entry.css',
-  templateUrl: './employee-entry.html',
-})
-export class EmployeeEntry {
-  http = inject(HttpClient);
+export interface EmployeeData {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  phoneNumber?: string;
+  gender?: string;
+  dateOfBirth?: string;
+  department?: string;
+  designation?: string;
+  dateOfJoining?: string;
+  address?: string;
+}
 
-  selectedFile: File | null = null;
-  isExtracting = false;
+@Component({
+  selector: 'app-employee-entry',
+  standalone: true,
+  imports: [FormsModule],
+  templateUrl: './employee-entry.html',
+  styleUrl: './employee-entry.css'
+})
+export class EmployeeEntry implements OnInit {
+
+  private http = inject(HttpClient);
 
   EmployeeObj: any = this.getInitialEmployeeState();
 
+  ngOnInit(): void {
+
+    // Receive extracted data from PDF Upload component
+    const extractedData: EmployeeData | undefined =
+      history.state?.employeeData;
+
+    if (extractedData) {
+
+      this.EmployeeObj = {
+
+        ...this.getInitialEmployeeState(),
+
+        firstName: extractedData.firstName ?? '',
+        lastName: extractedData.lastName ?? '',
+        email: extractedData.email ?? '',
+        phoneNumber: extractedData.phoneNumber ?? '',
+        gender: extractedData.gender ?? '',
+
+        dateOfBirth: this.formatDate(extractedData.dateOfBirth),
+
+        department: extractedData.department ?? '',
+        designation: extractedData.designation ?? '',
+
+        dateOfJoining: this.formatDate(extractedData.dateOfJoining),
+
+        address: extractedData.address ?? ''
+
+      };
+
+      console.log('Employee form populated:', this.EmployeeObj);
+
+    }
+
+  }
+
   getInitialEmployeeState() {
+
     return {
       employeeId: 0,
       firstName: '',
@@ -30,88 +78,67 @@ export class EmployeeEntry {
       dateOfJoining: '',
       address: ''
     };
+
   }
 
-  onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    this.selectedFile = input.files?.[0] ?? null;
-  }
-
-  // Upload PDF -> Extract text via PdfPig -> Extract JSON via Gemini -> Auto-fill Form
-  onUploadAndExtractPdf(): void {
-    if (!this.selectedFile) {
-      alert('Please select a PDF file first.');
-      return;
-    }
-
-    this.isExtracting = true;
-    const formData = new FormData();
-    formData.append('file', this.selectedFile);
-
-    this.http.post<any>('https://localhost:7091/api/pdf/extract-employee', formData)
-      .subscribe({
-        next: (extractedData) => {
-          this.isExtracting = false;
-          console.log('Data extracted from LLM:', extractedData);
-
-          // Auto-fill form fields with extracted data
-          this.EmployeeObj = {
-            ...this.EmployeeObj,
-            firstName: extractedData.firstName ?? '',
-            lastName: extractedData.lastName ?? '',
-            email: extractedData.email ?? '',
-            phoneNumber: extractedData.phoneNumber ?? '',
-            gender: extractedData.gender ?? '',
-            dateOfBirth: this.formatDate(extractedData.dateOfBirth),
-            department: extractedData.department ?? '',
-            designation: extractedData.designation ?? '',
-            dateOfJoining: this.formatDate(extractedData.dateOfJoining),
-            address: extractedData.address ?? ''
-          };
-
-          alert('Resume parsed successfully! Form fields have been auto-filled.');
-        },
-        error: (error) => {
-          this.isExtracting = false;
-          console.error('PDF extraction failed:', error);
-          alert('Failed to parse PDF resume. Please enter details manually.');
-        }
-      });
-  }
-
+  // Save Employee
   onSubmitSaveEmployee(): void {
+
     const payload = { ...this.EmployeeObj };
 
-    // Clean up empty ID and date fields before sending to .NET
-    if (!payload.employeeId) delete payload.employeeId;
-    if (!payload.dateOfBirth) delete payload.dateOfBirth;
-    if (!payload.dateOfJoining) delete payload.dateOfJoining;
-
-    this.http.post('https://localhost:7091/api/employee', payload)
-      .subscribe({
-        next: () => {
-          alert('Employee added successfully!');
-          this.EmployeeObj = this.getInitialEmployeeState();
-          this.selectedFile = null;
-        },
-        error: (error) => {
-          console.error('Failed to add employee:', error);
-          alert('Failed to save employee record.');
-        }
-      });
-  }
-
-  formatDate(value: string | null | undefined): string {
-    if (!value) return '';
-
-    // Extract YYYY-MM-DD from an ISO date or datetime
-    const match = value.match(/^\d{4}-\d{2}-\d{2}/);
-
-    if (match) {
-      return match[0];
+    if (!payload.employeeId) {
+      delete payload.employeeId;
     }
 
-    // Convert DD/MM/YYYY to YYYY-MM-DD
+    if (!payload.dateOfBirth) {
+      delete payload.dateOfBirth;
+    }
+
+    if (!payload.dateOfJoining) {
+      delete payload.dateOfJoining;
+    }
+
+    this.http.post(
+      'https://localhost:7091/api/employee',
+      payload
+    ).subscribe({
+
+      next: () => {
+
+        alert('Employee added successfully!');
+
+        // Reset form after successful save
+        this.EmployeeObj = this.getInitialEmployeeState();
+
+      },
+
+      error: (error) => {
+
+        console.error('Failed to add employee:', error);
+
+        alert('Failed to save employee record.');
+
+      }
+
+    });
+
+  }
+
+  // Convert extracted dates into YYYY-MM-DD format
+  formatDate(value: string | null | undefined): string {
+
+    if (!value) {
+      return '';
+    }
+
+    // ISO format: YYYY-MM-DD or YYYY-MM-DDTHH:mm:ss
+    const isoMatch = value.match(/^\d{4}-\d{2}-\d{2}/);
+
+    if (isoMatch) {
+      return isoMatch[0];
+    }
+
+    // DD/MM/YYYY format
     const otherFormat = value.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
 
     if (otherFormat) {
@@ -119,5 +146,7 @@ export class EmployeeEntry {
     }
 
     return '';
+
   }
-}
+
+} 

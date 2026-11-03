@@ -1,4 +1,3 @@
-
 :host {
   display: block;
   min-height: 100%;
@@ -26,6 +25,8 @@
   box-shadow: 0 6px 24px rgba(15, 23, 42, 0.05);
 }
 
+/* Header */
+
 .form-header {
   padding-bottom: 22px;
   border-bottom: 1px solid #e5e7eb;
@@ -43,6 +44,82 @@
   font-size: 14px;
   color: #6b7280;
 }
+
+/* Resume Upload Section */
+
+.resume-upload-section {
+  margin: 24px 0;
+  padding: 18px;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+}
+
+.resume-upload-section h3 {
+  margin: 0 0 14px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.resume-upload-section input[type="file"] {
+  display: block;
+  width: 100%;
+  margin-bottom: 14px;
+  padding: 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 7px;
+  background: #fff;
+  color: #374151;
+  font-family: inherit;
+  font-size: 13px;
+}
+
+.resume-upload-section input[type="file"]::file-selector-button {
+  margin-right: 12px;
+  padding: 7px 12px;
+  border: none;
+  border-radius: 5px;
+  background: #eef2ff;
+  color: #4338ca;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.resume-upload-section input[type="file"]::file-selector-button:hover {
+  background: #e0e7ff;
+}
+
+.resume-upload-section button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 7px;
+  background: #4f46e5;
+  color: #fff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.resume-upload-section button:hover:not(:disabled) {
+  background: #4338ca;
+}
+
+.resume-upload-section button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.resume-upload-section button:disabled {
+  background: #a5b4fc;
+  cursor: not-allowed;
+}
+
+/* Form */
 
 form h3 {
   margin: 26px 0 18px;
@@ -111,6 +188,8 @@ form h3 {
   grid-column: 1 / -1;
 }
 
+/* Form Actions */
+
 .form-actions {
   display: flex;
   justify-content: flex-end;
@@ -128,6 +207,8 @@ form h3 {
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
+
+  /* Fixed: removed *background* */
   transition: background 0.2s, transform 0.2s;
 }
 
@@ -153,7 +234,10 @@ form h3 {
   transform: scale(0.98);
 }
 
+/* Responsive */
+
 @media (max-width: 600px) {
+
   .page-container {
     padding: 16px 10px;
   }

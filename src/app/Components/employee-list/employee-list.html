@@ -58,8 +58,20 @@
           </td>
 
           <td class="actions">
-            <button type="button" class="btn-view">View</button>
-            <button type="button" class="btn-edit">Edit</button>
+            <!-- <button type="button" class="btn-view">View</button> -->
+            <!-- <button type="button" class="btn-edit">Edit</button> -->
+
+            <button
+              type="button" class="btn-view"
+              (click)="viewEmployee(employee.employeeId)"
+            >
+              View
+            </button>
+             
+            <button
+              type="button" class="btn-view"
+              (click)="editEmployee(employee.employeeId)"
+            >Edit</button>
 
             <!-- <button type="button" class="btn-delete">Delete</button> -->
              <button
