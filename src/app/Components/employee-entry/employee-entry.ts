@@ -25,6 +25,7 @@ export interface EmployeeData {
 export class EmployeeEntry implements OnInit {
 
   private http = inject(HttpClient);
+  emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
   EmployeeObj: any = this.getInitialEmployeeState();
 
@@ -109,6 +110,8 @@ export class EmployeeEntry implements OnInit {
 
         // Reset form after successful save
         this.EmployeeObj = this.getInitialEmployeeState();
+        this.reloadPage();
+
 
       },
 
@@ -147,6 +150,43 @@ export class EmployeeEntry implements OnInit {
 
     return '';
 
+  }
+
+  reloadPage(): void {
+    const hasReloaded = sessionStorage.getItem('hasReloaded');
+
+    if (!hasReloaded) {
+      sessionStorage.setItem('hasReloaded', 'true');
+      location.reload();
+    } else {
+      sessionStorage.removeItem('hasReloaded');
+    }
+  }
+
+  // Today's date in YYYY-MM-DD format
+  today: string = new Date().toISOString().split('T')[0];
+
+  // Minimum date of birth (18 years ago)
+  maxDateOfBirth: string = this.getMaxDateOfBirth();
+
+  getMaxDateOfBirth(): string {
+    const today = new Date();
+
+    const maxDate = new Date(
+      today.getFullYear() - 18,
+      today.getMonth(),
+      today.getDate()
+    );
+
+    return this.formatDateForInput(maxDate);
+  }
+
+  formatDateForInput(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
   }
 
 } 

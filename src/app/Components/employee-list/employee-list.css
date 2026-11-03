@@ -73,7 +73,7 @@
   padding: 4px 10px;
   border: 1px solid #e0e7ff;
   border-radius: 9999px;
-  background: #eep2ff;
+  background: #eef2ff;
   background-color: #eef2ff;
   color: #4338ca;
   font-size: 11px;
@@ -130,7 +130,7 @@
 .table-wrapper {
   width: 100%;
   max-width: 100%;
-  max-height: 650px;
+  max-height: 800px;
   overflow: auto;
   scrollbar-width: thin;
   scrollbar-color: #cbd5e1 #f1f5f9;
