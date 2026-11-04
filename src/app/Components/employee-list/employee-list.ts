@@ -1,14 +1,14 @@
 
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-employee-list',
   standalone: true,
-  imports: [DatePipe, FormsModule],
+  imports: [DatePipe, FormsModule, CommonModule],
   templateUrl: './employee-list.html',
   styleUrl: './employee-list.css'
 })
@@ -16,7 +16,9 @@ import { Router } from '@angular/router';
 
 export class EmployeeList implements OnInit {
 
-  constructor(public router: Router) { }
+  constructor(public router: Router ) { }
+
+  private cdr = inject(ChangeDetectorRef);
 
   http = inject(HttpClient);
 
@@ -36,7 +38,7 @@ export class EmployeeList implements OnInit {
     updatedAt: ''
   };
 
-  employeeList: any[] = [];
+  employeeList: Employee[] = [];
 
   ngOnInit(): void {
     this.getAllEmployee();
@@ -44,15 +46,18 @@ export class EmployeeList implements OnInit {
 
 
     // refresh the page once so that it wil load all the employe
-    this.reloadPage();
+    // this.reloadPage();
   }
 
   getAllEmployee(): void {
-    this.http.get<any[]>('https://localhost:7091/api/employee')
+    this.http.get<Employee[]>('https://localhost:7091/api/employee')
       .subscribe({
         next: (result) => {
-          this.employeeList = result;
-          console.log('Employees fetched:', result);
+          this.employeeList = [...result];
+          console.log('Employees fetched:', this.employeeList);
+
+
+          this.cdr.detectChanges();
         },
         error: (error) => {
           console.error('Failed to fetch employees:', error);
@@ -67,7 +72,9 @@ export class EmployeeList implements OnInit {
           console.log(`Employee with ID ${employeeId} deleted successfully.`);
           // this.getAllEmployee(); // Refresh the list after deletion
           this.employeeList = this.employeeList.filter(emp => emp.employeeId !== employeeId);
-          this.reloadPage();
+
+          this.cdr.detectChanges();
+          // this.reloadPage();
         },
         error: (error) => {
           console.error(`Failed to delete employee with ID ${employeeId}:`, error);

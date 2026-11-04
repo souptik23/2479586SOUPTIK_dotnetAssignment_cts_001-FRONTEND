@@ -1,6 +1,6 @@
 
 import { HttpClient } from '@angular/common/http';
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
@@ -34,6 +34,8 @@ export class UpdateEmployee implements OnInit {
     private activatedRoute: ActivatedRoute
   ) { }
 
+  private cdr = inject(ChangeDetectorRef);
+
   ngOnInit(): void {
     const employeeId = this.activatedRoute.snapshot.paramMap.get('id');
 
@@ -41,13 +43,13 @@ export class UpdateEmployee implements OnInit {
       this.loadEmployee(employeeId);
     }
 
-    const hasReloaded = sessionStorage.getItem('hasReloaded');
-    if (!hasReloaded) {
-      sessionStorage.setItem('hasReloaded', 'true');
-      window.location.reload();
-    } else {
-      sessionStorage.removeItem('hasReloaded');
-    }
+    // const hasReloaded = sessionStorage.getItem('hasReloaded');
+    // if (!hasReloaded) {
+    //   sessionStorage.setItem('hasReloaded', 'true');
+    //   window.location.reload();
+    // } else {
+    //   sessionStorage.removeItem('hasReloaded');
+    // }
   }
 
   // Load existing employee details
@@ -72,6 +74,8 @@ export class UpdateEmployee implements OnInit {
               ? employee.dateOfJoining.split('T')[0]
               : ''
           };
+
+          this.cdr.detectChanges();
 
         },
 

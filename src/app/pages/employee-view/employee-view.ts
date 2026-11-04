@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -13,6 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class EmployeeView implements OnInit {
 
   private http = inject(HttpClient);
+  private cdr = inject(ChangeDetectorRef);
 
   EmployeeObj: any = {};
 
@@ -28,7 +29,9 @@ export class EmployeeView implements OnInit {
     if (employeeId) {
       this.loadEmployee(employeeId);
     }
-    this.reloadPage();
+
+
+    // this.reloadPage();
   }
 
   loadEmployee(employeeId: string): void {
@@ -36,6 +39,9 @@ export class EmployeeView implements OnInit {
       next: (employee) => {
         console.log('Employee data:', employee);
         this.EmployeeObj = employee;
+
+        this.cdr.detectChanges();
+
       },
 
       error: (error) => {

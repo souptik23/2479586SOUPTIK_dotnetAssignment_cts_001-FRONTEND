@@ -1,3 +1,4 @@
+
 <div class="page-container">
 
   <div class="form-card">
@@ -9,20 +10,41 @@
 
     <form #employeeForm="ngForm">
 
+      <!-- Personal Information -->
       <h3>Personal Information</h3>
 
       <div class="form-grid">
 
+        <!-- Employee ID -->
         <div class="form-group">
           <label for="employeeId">Employee ID *</label>
 
-          <input type="number" [(ngModel)]="EmployeeObj.employeeId" id="employeeId" name="employeeId" required>
+          <input
+            type="number"
+            [(ngModel)]="EmployeeObj.employeeId"
+            id="employeeId"
+            name="employeeId"
+            required
+            #employeeId="ngModel">
+
+          <div class="error-message"
+               *ngIf="employeeId.invalid && (employeeId.touched || employeeId.dirty)">
+
+            <small *ngIf="employeeId.errors?.['required']">
+              Employee ID is required.
+            </small>
+
+          </div>
         </div>
 
+        <!-- Gender -->
         <div class="form-group">
           <label for="gender">Gender</label>
 
-          <select id="gender" [(ngModel)]="EmployeeObj.gender" name="gender">
+          <select
+            id="gender"
+            [(ngModel)]="EmployeeObj.gender"
+            name="gender">
 
             <option value="">Select gender</option>
             <option value="Male">Male</option>
@@ -33,27 +55,68 @@
           </select>
         </div>
 
+        <!-- First Name -->
         <div class="form-group">
           <label for="firstName">First Name *</label>
 
-          <input type="text" [(ngModel)]="EmployeeObj.firstName" id="firstName" name="firstName"
-            placeholder="Enter first name" required>
+          <input
+            type="text"
+            [(ngModel)]="EmployeeObj.firstName"
+            id="firstName"
+            name="firstName"
+            placeholder="Enter first name"
+            required
+            #firstName="ngModel">
+
+          <div class="error-message"
+               *ngIf="firstName.invalid && (firstName.touched || firstName.dirty)">
+
+            <small *ngIf="firstName.errors?.['required']">
+              First name is required.
+            </small>
+
+          </div>
         </div>
 
+        <!-- Last Name -->
         <div class="form-group">
           <label for="lastName">Last Name *</label>
 
-          <input type="text" [(ngModel)]="EmployeeObj.lastName" id="lastName" name="lastName"
-            placeholder="Enter last name" required>
+          <input
+            type="text"
+            [(ngModel)]="EmployeeObj.lastName"
+            id="lastName"
+            name="lastName"
+            placeholder="Enter last name"
+            required
+            #lastName="ngModel">
+
+          <div class="error-message"
+               *ngIf="lastName.invalid && (lastName.touched || lastName.dirty)">
+
+            <small *ngIf="lastName.errors?.['required']">
+              Last name is required.
+            </small>
+
+          </div>
         </div>
 
+        <!-- Email -->
         <div class="form-group">
           <label for="email">Email Address *</label>
 
-          <input type="email" [(ngModel)]="EmployeeObj.email" id="email" name="email" placeholder="name@example.com"
-            [pattern]="emailPattern" #email="ngModel" required>
+          <input
+            type="email"
+            [(ngModel)]="EmployeeObj.email"
+            id="email"
+            name="email"
+            placeholder="name@example.com"
+            [pattern]="emailPattern"
+            #email="ngModel"
+            required>
 
-          <div class="error-message" *ngIf="email.invalid && (email.touched || email.dirty)">
+          <div class="error-message"
+               *ngIf="email.invalid && (email.touched || email.dirty)">
 
             <small *ngIf="email.errors?.['required']">
               Email address is required.
@@ -66,20 +129,49 @@
           </div>
         </div>
 
+        <!-- Phone Number -->
         <div class="form-group">
           <label for="phoneNumber">Phone Number *</label>
 
-          <input type="tel" [(ngModel)]="EmployeeObj.phoneNumber" id="phoneNumber" name="phoneNumber"
-            placeholder="10-digit phone number" maxlength="10" pattern="[0-9]{10}" required>
+          <input
+            type="tel"
+            [(ngModel)]="EmployeeObj.phoneNumber"
+            id="phoneNumber"
+            name="phoneNumber"
+            placeholder="10-digit phone number"
+            maxlength="10"
+            pattern="[0-9]{10}"
+            required
+            #phoneNumber="ngModel">
+
+          <div class="error-message"
+               *ngIf="phoneNumber.invalid && (phoneNumber.touched || phoneNumber.dirty)">
+
+            <small *ngIf="phoneNumber.errors?.['required']">
+              Phone number is required.
+            </small>
+
+            <small *ngIf="phoneNumber.errors?.['pattern']">
+              Enter a valid 10-digit phone number.
+            </small>
+
+          </div>
         </div>
 
+        <!-- Date of Birth -->
         <div class="form-group">
           <label for="dateOfBirth">Date of Birth</label>
 
-          <input type="date" [(ngModel)]="EmployeeObj.dateOfBirth" id="dateOfBirth" name="dateOfBirth"
-            [max]="maxDateOfBirth" #dob="ngModel">
+          <input
+            type="date"
+            [(ngModel)]="EmployeeObj.dateOfBirth"
+            id="dateOfBirth"
+            name="dateOfBirth"
+            [max]="maxDateOfBirth"
+            #dob="ngModel">
 
-          <div class="error-message" *ngIf="dob.invalid && (dob.touched || dob.dirty)">
+          <div class="error-message"
+               *ngIf="dob.invalid && (dob.touched || dob.dirty)">
 
             <small *ngIf="dob.errors?.['max']">
               Employee must be at least 18 years old.
@@ -90,14 +182,19 @@
 
       </div>
 
+      <!-- Employment Information -->
       <h3>Employment Information</h3>
 
       <div class="form-grid">
 
+        <!-- Department -->
         <div class="form-group">
           <label for="department">Department</label>
 
-          <select id="department" [(ngModel)]="EmployeeObj.department" name="department">
+          <select
+            id="department"
+            [(ngModel)]="EmployeeObj.department"
+            name="department">
 
             <option value="">Select department</option>
             <option value="IT">IT</option>
@@ -110,44 +207,68 @@
           </select>
         </div>
 
+        <!-- Designation -->
         <div class="form-group">
           <label for="designation">Designation</label>
 
-          <input type="text" [(ngModel)]="EmployeeObj.designation" id="designation" name="designation"
+          <input
+            type="text"
+            [(ngModel)]="EmployeeObj.designation"
+            id="designation"
+            name="designation"
             placeholder="e.g. Software Engineer">
         </div>
 
+        <!-- Date of Joining -->
         <div class="form-group">
           <label for="dateOfJoining">Date of Joining</label>
 
-          <input type="date" [(ngModel)]="EmployeeObj.dateOfJoining" id="dateOfJoining" name="dateOfJoining">
+          <input
+            type="date"
+            [(ngModel)]="EmployeeObj.dateOfJoining"
+            id="dateOfJoining"
+            name="dateOfJoining">
         </div>
 
+        <!-- Address -->
         <div class="form-group full-width">
           <label for="address">Address</label>
 
-          <textarea id="address" [(ngModel)]="EmployeeObj.address" name="address" rows="3"
+          <textarea
+            id="address"
+            [(ngModel)]="EmployeeObj.address"
+            name="address"
+            rows="3"
             placeholder="Enter complete address">
           </textarea>
         </div>
 
       </div>
 
+      <!-- Form Actions -->
       <div class="form-actions">
 
-        <button type="reset" class="btn-secondary" (click)="EmployeeObj = getInitialEmployeeState()">
+        <button
+          type="reset"
+          class="btn-secondary"
+          (click)="EmployeeObj = getInitialEmployeeState()">
 
           Clear Form
 
         </button>
 
-        <button type="button" class="btn-primary" [disabled]="employeeForm.invalid" (click)="onSubmitSaveEmployee()">
+        <button
+          type="button"
+          class="btn-primary"
+          [disabled]="employeeForm.invalid"
+          (click)="onSubmitSaveEmployee()">
 
           Add Employee
 
         </button>
 
       </div>
+
     </form>
 
   </div>

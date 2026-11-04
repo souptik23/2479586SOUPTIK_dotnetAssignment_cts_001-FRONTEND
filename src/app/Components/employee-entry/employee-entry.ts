@@ -1,6 +1,7 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 export interface EmployeeData {
   firstName?: string;
@@ -18,11 +19,13 @@ export interface EmployeeData {
 @Component({
   selector: 'app-employee-entry',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './employee-entry.html',
   styleUrl: './employee-entry.css'
 })
 export class EmployeeEntry implements OnInit {
+
+  private cdr = inject(ChangeDetectorRef);
 
   private http = inject(HttpClient);
   emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -110,7 +113,10 @@ export class EmployeeEntry implements OnInit {
 
         // Reset form after successful save
         this.EmployeeObj = this.getInitialEmployeeState();
-        this.reloadPage();
+
+
+        this.cdr.detectChanges();
+        // this.reloadPage();
 
 
       },
