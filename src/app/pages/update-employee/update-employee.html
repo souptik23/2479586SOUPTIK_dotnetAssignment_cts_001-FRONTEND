@@ -38,7 +38,7 @@
 
         <div class="form-grid">
 
-          <!-- Employee ID -->
+          <!-- Employee ID (Locked) -->
           <div class="form-group locked-field">
 
             <label for="employeeId">
@@ -51,7 +51,6 @@
               [(ngModel)]="EmployeeObj.employeeId"
               id="employeeId"
               name="employeeId"
-              disabled
               readonly
               class="input-disabled">
 
@@ -224,8 +223,7 @@
               [(ngModel)]="EmployeeObj.address"
               name="address"
               rows="3"
-              placeholder="Enter complete address">
-            </textarea>
+              placeholder="Enter complete address"></textarea>
 
           </div>
 

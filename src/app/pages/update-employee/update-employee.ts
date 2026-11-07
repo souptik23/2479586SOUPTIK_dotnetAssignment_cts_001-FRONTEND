@@ -14,6 +14,9 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 export class UpdateEmployee implements OnInit {
 
   private http = inject(HttpClient);
+  private cdr = inject(ChangeDetectorRef);
+
+  private readonly apiUrl = 'https://localhost:7091/api/employee';
 
   EmployeeObj: any = {
     employeeId: 0,
@@ -32,90 +35,100 @@ export class UpdateEmployee implements OnInit {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute
-  ) { }
-
-  private cdr = inject(ChangeDetectorRef);
+  ) {}
 
   ngOnInit(): void {
+
+    // Get Employee ID from the route
     const employeeId = this.activatedRoute.snapshot.paramMap.get('id');
 
     if (employeeId) {
       this.loadEmployee(employeeId);
+    } else {
+      alert('Employee ID not found.');
+      this.router.navigate(['/list']);
     }
-
-    // const hasReloaded = sessionStorage.getItem('hasReloaded');
-    // if (!hasReloaded) {
-    //   sessionStorage.setItem('hasReloaded', 'true');
-    //   window.location.reload();
-    // } else {
-    //   sessionStorage.removeItem('hasReloaded');
-    // }
   }
 
   // Load existing employee details
   loadEmployee(id: number | string): void {
 
-    this.http
-      .get<any>(`https://localhost:7091/api/employee/${id}`)
-      .subscribe({
-        next: (employee) => {
+    this.http.get<any>(`${this.apiUrl}/${id}`).subscribe({
 
-          console.log('Employee loaded:', employee);
+      next: (employee) => {
 
-          this.EmployeeObj = {
-            ...employee,
+        this.EmployeeObj = {
+          ...employee,
 
-            // Convert API date format to HTML date format
-            dateOfBirth: employee.dateOfBirth
-              ? employee.dateOfBirth.split('T')[0]
-              : '',
+          dateOfBirth: employee.dateOfBirth
+            ? employee.dateOfBirth.split('T')[0]
+            : '',
 
-            dateOfJoining: employee.dateOfJoining
-              ? employee.dateOfJoining.split('T')[0]
-              : ''
-          };
+          dateOfJoining: employee.dateOfJoining
+            ? employee.dateOfJoining.split('T')[0]
+            : ''
+        };
 
-          this.cdr.detectChanges();
+        this.cdr.detectChanges();
 
-        },
+      },
 
-        error: (error) => {
-          console.error('Error loading employee:', error);
-          alert('Unable to load employee details.');
-        }
-      });
+      error: (error) => {
+
+        console.error('Error loading employee:', error);
+
+        alert('Unable to load employee details.');
+
+      }
+
+    });
+
   }
 
-  // Update employee details
+  // Update existing employee
   onUpdateEmployee(): void {
 
-    this.http
-      .put(
-        'https://localhost:7091/api/employee',
-        this.EmployeeObj
-      )
-      .subscribe({
+    if (!this.EmployeeObj.employeeId) {
+      alert('Invalid Employee ID.');
+      return;
+    }
 
-        next: (response) => {
-          console.log('Employee updated successfully:', response);
+    const payload = {
+      ...this.EmployeeObj
+    };
 
-          alert('Employee details updated successfully!');
+    this.http.put(
+      this.apiUrl,
+      payload
+    ).subscribe({
 
-          this.router.navigate(['/list']);
-        },
+      next: (response) => {
 
-        error: (error) => {
-          console.error('Error updating employee:', error);
+        console.log('Employee updated successfully:', response);
 
-          alert('Failed to update employee details.');
-        }
+        alert('Employee details updated successfully!');
 
-      });
+        this.router.navigate(['/list']);
+
+      },
+
+      error: (error) => {
+
+        console.error('Error updating employee:', error);
+
+        alert('Failed to update employee details.');
+
+      }
+
+    });
+
   }
 
-  // Cancel and return to employee list
+  // Cancel update and return to employee list
   onCancel(): void {
+
     this.router.navigate(['/list']);
+
   }
 
 }
